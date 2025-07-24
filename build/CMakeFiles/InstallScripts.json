@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/bobywoby/dev/c++/renderer/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

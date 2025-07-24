@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/renderer.dir/link.d CMakeFiles/renderer.dir/src/Model.cpp.o CMakeFiles/renderer.dir/src/main.cpp.o CMakeFiles/renderer.dir/vendors/glad/src/gl.c.o -o renderer  /usr/local/lib/libglfw3.a /usr/lib/librt.a -lm -ldl

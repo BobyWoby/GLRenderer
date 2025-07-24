@@ -1,3 +1,0 @@
-/home/bobywoby/dev/c++/renderer/build/CMakeFiles/renderer.dir
-/home/bobywoby/dev/c++/renderer/build/CMakeFiles/edit_cache.dir
-/home/bobywoby/dev/c++/renderer/build/CMakeFiles/rebuild_cache.dir
