@@ -23,13 +23,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action,
     if ((key == GLFW_KEY_A && action == GLFW_PRESS) ||
         (key == GLFW_KEY_A && action == GLFW_REPEAT)) {
         rotation[1] -= 0.1;
-    } else if ((key == GLFW_KEY_D && action == GLFW_PRESS) ||
+    }
+    if ((key == GLFW_KEY_D && action == GLFW_PRESS) ||
                (key == GLFW_KEY_D && action == GLFW_REPEAT)) {
         rotation[1] += 0.1;
-    } else if ((key == GLFW_KEY_S && action == GLFW_PRESS) ||
+    }
+    if ((key == GLFW_KEY_S && action == GLFW_PRESS) ||
                (key == GLFW_KEY_S && action == GLFW_REPEAT)) {
         rotation[0] -= 0.1;
-    } else if ((key == GLFW_KEY_W && action == GLFW_PRESS) ||
+    }
+    if ((key == GLFW_KEY_W && action == GLFW_PRESS) ||
                (key == GLFW_KEY_W && action == GLFW_REPEAT)) {
         rotation[0] += 0.1;
     }
@@ -50,6 +53,8 @@ int main(int argc, char* argv[]) {
                "../res/shaders/Basic.frag");
 
     memcpy(rotation, cube.rotation, 3 * sizeof(float));
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
