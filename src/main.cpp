@@ -49,11 +49,11 @@ int main(int argc, char* argv[]) {
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
 
-    Model cube("../res/models/diablo3.obj", "../res/shaders/Basic.vert",
+    Model cube("../res/models/cube.obj", "../res/shaders/Basic.vert",
                "../res/shaders/Basic.frag");
 
     memcpy(rotation, cube.rotation, 3 * sizeof(float));
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 
     glEnable(GL_DEBUG_OUTPUT);
@@ -62,6 +62,11 @@ int main(int argc, char* argv[]) {
 
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+
+    glEnable(GL_TEXTURE_2D);
 
     glUseProgram(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

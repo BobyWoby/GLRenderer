@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glad/gl.h>
+#include <memory>
 #include <tuple>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -10,6 +11,7 @@
 #include <vector>
 
 #include "logging.h"
+#include "Texture.h"
 
 struct Vertex{
     float position[3];
@@ -35,8 +37,9 @@ class Model {
 
     unsigned int vao, ibo;  // the vertex array object and index buffer object
     unsigned int program;
-    int u_rotation;
+    int u_rotation, u_texture;
 
+    std::shared_ptr<Texture> texture;
    public:
     float rotation[3] = {0,0,0};
     float color[3] = {0,0,0};

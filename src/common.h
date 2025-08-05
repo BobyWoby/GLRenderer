@@ -1,9 +1,9 @@
 #pragma once
 #include <algorithm>
 #include <array>
+#include <fstream>
 #include <optional>
 #include <string>
-#include <fstream> 
 #include <vector>
 
 #define MAX_LENGTH 1024

@@ -1,7 +1,9 @@
 #include "Model.h"
 
+#include <algorithm>
 #include <array>
 #include <map>
+#include <memory>
 #include <string>
 
 #include "common.h"
@@ -41,15 +43,6 @@ Model::Model(std::string filepath, std::string vertex_shader,
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                           (void *)tex_offset);
 
-    // std::vector<unsigned int> pos_indices;
-    // for (auto index : indices) {
-    //     // std::cout << "Position Index " << index[0] << ": "
-    //     //           << positions.at(index[0])[0] << ", "
-    //     //           << positions.at(index[0])[1] << ", "
-    //     //           << positions.at(index[0])[2] << "\n";
-    //     pos_indices.push_back(index[0]);
-    // }
-
     glGenBuffers(1, &ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
@@ -74,6 +67,10 @@ Model::Model(std::string filepath, std::string vertex_shader,
     glDeleteShader(fs);
 
     u_rotation = glGetUniformLocation(program, "u_Rot");
+    texture = std::make_shared<Texture>(
+            Texture("res/textures/test.png"));
+    u_texture = glGetUniformLocation(program, "u_Tex");
+    texture->Bind();
 }
 
 Model::~Model() {
@@ -96,9 +93,6 @@ void Model::parseFile(std::string filepath) {
             position[0] = (std::stof(elements.at(1)));
             position[1] = (std::stof(elements.at(2)));
             position[2] = (std::stof(elements.at(3)));
-            // std::cout << position[0] << ", " << position[1] << ", "
-            //           << position[2] << "\n";
-
             positions.push_back(position);
         } else if (elements.at(0) == "f") {
             // add to the indices
@@ -121,12 +115,10 @@ void Model::parseFile(std::string filepath) {
             texture_coords.push_back(tex_coord);
         }
     }
-    // for(auto pos : positions){
-    //     std::cout << pos[0] << ", " << pos[1] << ", " << pos[2] << "\n";
-    // }
 }
 
 void Model::compileVertices() {
+    // vertex, index
     std::map<std::array<float, 6>, int> seenVertices;  // position, tex
 
     for (auto index : indices) {
@@ -142,8 +134,6 @@ void Model::compileVertices() {
         auto it = seenVertices.find(vertex);
         uint pos;
         if (it != seenVertices.end()) {
-            // this already exists
-            // pos = std::distance(seenVertices.begin(), it);
             pos = seenVertices[vertex];
         } else {
             for (float attribute : vertex) {
@@ -151,6 +141,8 @@ void Model::compileVertices() {
             }
             pos = seenVertices.size();
             seenVertices.insert({vertex, pos});
+            std::cout << "Texture coord: " <<  vertex[3] << ", " << vertex[4] << " Pos:  " << pos
+                << "\n";
         }
         vertex_indices.push_back(pos);
     }
@@ -188,9 +180,11 @@ void Model::render() {
     // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     // glBindVertexArray(0);
 
+    glActiveTexture(GL_TEXTURE0);
     glUseProgram(program);
 
     glUniform3f(u_rotation, rotation[0], rotation[1], rotation[2]);
+    glUniform1i(u_texture, 0);
 
     glBindVertexArray(vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
