@@ -1,11 +1,25 @@
 #version 330 core
 
 layout(location = 0) in vec3 position;
+layout(location = 1) in vec2 tex_coord;
+
 uniform vec3 u_Rot;
 
+out vec2 v_TexCoord;
 out vec4 pos;
 
+vec3 rotate();
+
 void main() {
+    vec3 tmp_pos = rotate();
+    pos =  vec4(tmp_pos[0], tmp_pos[1], tmp_pos[2], 1.0);
+
+    v_TexCoord = tex_coord;
+
+    gl_Position = pos;
+};
+
+vec3 rotate(){
     mat3 rotX;
     rotX[0] = vec3(1, 0, 0);
     rotX[1] = vec3(0, cos(u_Rot[0]), -sin(u_Rot[0]));
@@ -23,7 +37,5 @@ void main() {
 
     vec3 tmp_pos;
     tmp_pos =  rotX * rotY *  rotZ * position;
-
-    pos =  vec4(tmp_pos[0], tmp_pos[1], tmp_pos[2], 1.0);
-    gl_Position = pos;
-};
+    return tmp_pos;
+}

@@ -12,6 +12,7 @@
 
 #include "logging.h"
 #include "Texture.h"
+#include "Shader.h"
 
 struct Vertex{
     float position[3];
@@ -38,8 +39,8 @@ class Model {
     unsigned int vao, ibo;  // the vertex array object and index buffer object
     unsigned int program;
     int u_rotation, u_texture;
+    Shader shader;
 
-    std::shared_ptr<Texture> texture;
    public:
     float rotation[3] = {0,0,0};
     float color[3] = {0,0,0};
@@ -55,4 +56,8 @@ class Model {
           std::string frag_shader);  // parse .obj file
 
     void render();
+
+    std::vector<float> GetVertices();
+    unsigned int GetVAO();
+    unsigned int GetIBO();
 };

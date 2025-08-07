@@ -16,9 +16,7 @@ Texture::Texture(const std::string& path)
     if (!m_localBuffer) {
         std::cerr << "Failed to load texture!\n";
     } else {
-        std::string sName(reinterpret_cast<char*>(m_localBuffer));
-        std::cout << "texture loading\n";
-        std::cout << sName << "\n";
+        std::cout << "Texture Loaded!\n";
     }
 
     glGenTextures(1, &rendererID);

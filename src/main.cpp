@@ -3,6 +3,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include "Texture.h"
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
@@ -49,7 +50,7 @@ int main(int argc, char* argv[]) {
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
 
-    Model cube("../res/models/cube.obj", "../res/shaders/Basic.vert",
+    Model cube("../res/models/diablo3.obj", "../res/shaders/Basic.vert",
                "../res/shaders/Basic.frag");
 
     memcpy(rotation, cube.rotation, 3 * sizeof(float));
@@ -72,6 +73,12 @@ int main(int argc, char* argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    int seed = time(0);
+
+    Texture tex("./res/textures/diablo3_pose_spec.tga");
+    tex.Bind();
+
     glfwSwapInterval(1);
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
