@@ -10,11 +10,11 @@
 #include "Model.h"
 #include "logging.h"
 
+float rotation[3] = {0, 0, 0};
+
 static void error_callback(int error, const char* description) {
     fprintf(stderr, "Error: %s\n", description);
 }
-
-float rotation[3] = {0, 0, 0};
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action,
                   int mod) {
@@ -74,7 +74,6 @@ int main(int argc, char* argv[]) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    int seed = time(0);
 
     Texture tex("./res/textures/diablo3_pose_spec.tga");
     tex.Bind();

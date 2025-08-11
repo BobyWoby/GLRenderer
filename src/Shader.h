@@ -4,15 +4,18 @@
 
 class Shader {
    private:
-    std::string m_src;
     unsigned int compileShader(unsigned int type, std::string source);
+    bool initialized = false;
 
    public:
     unsigned int m_rendererId;
     Shader(const std::string &vertexPath, const std::string &fragPath);
     Shader();
+    ~Shader();
 
     void Bind();
+    void Unbind();
+    void Delete();
 
     void uniform1i(const std::string &name, int val);
     void uniform2i(const std::string &name, int val1, int val2);

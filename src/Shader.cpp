@@ -30,8 +30,8 @@ unsigned int Shader::compileShader(unsigned int type, std::string source) {
     return id;
 }
 
-Shader::Shader(){
-}
+Shader::Shader() {}
+Shader::~Shader() {}
 
 Shader::Shader(const std::string &vertexPath, const std::string &fragPath) {
     m_rendererId = glCreateProgram();
@@ -49,12 +49,16 @@ Shader::Shader(const std::string &vertexPath, const std::string &fragPath) {
 
     glDeleteShader(vs);
     glDeleteShader(fs);
+    initialized = true;
 }
 
 /**
  * @brief Binds the shader program to the OpenGL context
  */
 void Shader::Bind() { glUseProgram(m_rendererId); }
+
+void Shader::Unbind() { glUseProgram(0); }
+void Shader::Delete() { glDeleteProgram(m_rendererId); }
 
 /**
  * @brief assigns a single integer uniform to the shader program
@@ -66,18 +70,13 @@ void Shader::uniform1i(const std::string &name, int val) {
     glUniform1i(glGetUniformLocation(m_rendererId, name.c_str()), val);
 }
 
-
 void Shader::uniform2i(const std::string &name, int val1, int val2) {
     glUniform2i(glGetUniformLocation(m_rendererId, name.c_str()), val1, val2);
 }
 
-
 void Shader::uniform1ui(const std::string &name, unsigned int val) {
     glUniform1ui(glGetUniformLocation(m_rendererId, name.c_str()), val);
 }
-
-
-
 
 void Shader::uniform2f(const std::string &name, float val1, float val2) {
     glUniform2f(glGetUniformLocation(m_rendererId, name.c_str()), val1, val2);

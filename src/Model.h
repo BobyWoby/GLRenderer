@@ -37,8 +37,6 @@ class Model {
     unsigned int compileShader(unsigned int type, std::string source);
 
     unsigned int vao, ibo;  // the vertex array object and index buffer object
-    unsigned int program;
-    int u_rotation, u_texture;
     Shader shader;
 
    public:

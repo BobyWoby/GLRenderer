@@ -53,34 +53,10 @@ Model::Model(std::string filepath, std::string vertex_shader,
 
     shader = Shader(vertex_shader, frag_shader);
     shader.uniform1i("u_Tex", 0);
-
-    // std::string vShader = fromFile(vertex_shader);
-    // std::string fShader = fromFile(frag_shader);
-    //
-    // program = glCreateProgram();
-    //
-    // unsigned int vs = compileShader(GL_VERTEX_SHADER, vShader);
-    // unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fShader);
-    //
-    // glAttachShader(program, vs);
-    // glAttachShader(program, fs);
-    //
-    // glLinkProgram(program);
-    // glValidateProgram(program);
-    //
-    // glDeleteShader(vs);
-    // glDeleteShader(fs);
-    //
-    u_rotation = glGetUniformLocation(program, "u_Rot");
-    // texture = std::make_shared<Texture>(
-    //         Texture("res/textures/test.png"));
-    u_texture = glGetUniformLocation(program, "u_Tex");
-    // texture->Bind();
-    glUniform1i(u_texture, 0);
 }
 
 Model::~Model() {
-    glDeleteProgram(program);
+    shader.Delete();
     glDeleteBuffers(1, &vao);
     glDeleteBuffers(1, &ibo);
 }
@@ -180,25 +156,14 @@ unsigned int Model::compileShader(unsigned int type, std::string source) {
 
 
 void Model::render() {
-    // glUseProgram(0);
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    // glBindVertexArray(0);
-
     uint seed = time(0);
 
-    // int timeLoc = glGetUniformLocation(program, "time");
-    // std::cout << "Time: " << seed << "\n";
     glActiveTexture(GL_TEXTURE0);
     shader.Bind();
-    // glUseProgram(program);
     auto now = std::chrono::system_clock::now();
     auto milliseconds_since_epoch = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
-    // glUniform1i(timeLoc, seed);
     shader.uniform1ui("time", static_cast<unsigned int>(milliseconds_since_epoch));
     shader.uniform3f("u_Rot", rotation[0], rotation[1], rotation[2]);
-    // glUniform1ui(timeLoc, static_cast<int>(milliseconds_since_epoch));
-    // glUniform3f(u_rotation, rotation[0], rotation[1], rotation[2]);
 
     glBindVertexArray(vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
